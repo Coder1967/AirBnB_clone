@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from uuid import uuid4
 from datetime import datetime
+import models
 """ declaration of a class 'BaseModel' """
 
 
@@ -12,6 +13,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            models.storage.new(self)
         else:
             l1 = []
             i = 0
@@ -72,12 +74,13 @@ class BaseModel:
     def save(self):
         """ updates the attr 'updated_at' """
         self.updated_at = datetime.now()
+        models.storage.save()
 
         """ returns a dictionary representation similar to
 __dict__ with some additions"""
     def to_dict(self):
         """ defining function to return dict"""
-        new_dict = self.__dict__
+        new_dict = self.__dict__.copy()
         new_dict['__class__'] = type(self).__name__
         new_dict["created_at"] = self.created_at.isoformat()
         new_dict["updated_at"] = self.updated_at.isoformat()

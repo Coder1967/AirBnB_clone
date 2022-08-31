@@ -1,11 +1,20 @@
 #!/usr/bin/python3
 from models.base_model import BaseModel
 import unittest
+import os
 """ unittests for base_model"""
 
 
 class Base_test(unittest.TestCase):
     """ tests for the unique id of object"""
+    @classmethod
+    def setUp(self):
+        """ first method ran, sets up test
+        """
+        try:
+            os.rename("file.json", "tmp.json")
+        except IOError:
+            pass
     def test_id(self):
         """ beginning test for id"""
         base1 = BaseModel()
@@ -36,3 +45,17 @@ class Base_test(unittest.TestCase):
         t = base1.updated_at
         base1.save()
         self.assertNotEqual(t, base1.updated_at)
+    
+    @classmethod
+    def tearDown(self):
+        """
+        last method ran. closes up test
+        """
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("tmp.json", "file.json")
+        except IOError:
+            pass
