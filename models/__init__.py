@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
 """
 initialize the models package
 """
@@ -15,10 +14,9 @@ if storage_t == "db":
 else:
     from models.engine.file_storage import FileStorage
     storage = FileStorage()
-=======
 from models.engine.file_storage import FileStorage
 """ creating a FileStorage object
 """
 storage = FileStorage()
->>>>>>> debe45bea197084243eb8a7cafa0ca410cca13c7
+#>>>>>>> debe45bea197084243eb8a7cafa0ca410cca13c7
 storage.reload()
