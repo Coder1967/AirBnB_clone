@@ -60,15 +60,15 @@ class HBNBCommand(cmd.Cmd):
                     n_id = Arg[0].split("(")[-1]
                     n_name = Arg[1]
                     n_value = Arg[2].split(')')[0]
-                    self.do_update("{} {} {} {}".format(instance, n_id, n_name, n_value))
-                    
+                    self.do_update("{} \
+{} {} {}".format(instance, n_id, n_name, n_value))
+
                     return
             except IndexError:
                 return
 
         else:
-            print("*** invalid syntax: {} ***".format(arg)) 
-
+            print("*** invalid syntax: {} ***".format(arg))
 
     def emptyline(self):
         """ overwriting the emptyline method """

@@ -7,11 +7,13 @@ from models.user import User
 from models.amenity import Amenity
 from models.city import City
 from models.engine.file_storage import FileStorage
+
+
 class TestPlace(TestCase):
     """ beginning unittests """
     @classmethod
     def setUp(self):
-        """ 
+        """
         first method ran, sets up test
         """
         try:

@@ -104,4 +104,3 @@ class FileStorage:
             if cls in key:
                 count += 1
         return count
-

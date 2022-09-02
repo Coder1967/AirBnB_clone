@@ -18,7 +18,7 @@ class TestReview(TestCase):
             os.rename("file.json", "tmp.json")
         except IOError:
             pass
-    
+
     def test_attrs(self):
         """ testing attribute assignment """
         place = Place()
@@ -30,8 +30,8 @@ class TestReview(TestCase):
         self.assertEqual(review.place_id, place.id)
         self.assertEqual(review.user_id, usr.id)
         self.assertEqual(review.text, "it was a splendid stay. 5 *")
-    
-    """ test for the 'save' and 'to_dict' metods 
+
+    """ test for the 'save' and 'to_dict' metods
     """
     def test_save_and_to_dict(self):
         """ beginning test for 'save' """

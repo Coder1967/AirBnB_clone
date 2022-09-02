@@ -29,7 +29,7 @@ class test_storage(TestCase):
         dict1 = sto.all()
         dict2 = sto.all()
         self.assertEqual(dict1, dict2)
-    
+
     @classmethod
     def tearDown(self):
         """ last method ran in test. closes
