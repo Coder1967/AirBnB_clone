@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from models.engine.file_storage import FileStorage
-from models.base_model import BaseModel
+from models.user import User
 from unittest import TestCase
 import os
 """ tests for 'FileStorag' class """
@@ -21,7 +21,8 @@ class test_storage(TestCase):
     def test_storage_methods(self):
         """tests the 'FileStorage' methods"""
         sto = FileStorage()
-        obj = BaseModel()
+        obj1 = User()
+        obj = User()
         sto.new(obj)
         sto.save()
         sto.reload()

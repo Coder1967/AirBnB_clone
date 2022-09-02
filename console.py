@@ -25,6 +25,51 @@ class HBNBCommand(cmd.Cmd):
         """Exits console"""
         return True
 
+    def default(self, arg):
+        """ handles advanced arguments"""
+        cmds = ["all", "count", "destroy", "show", "update"]
+        n_list = arg.split('.')
+        if len(n_list) > 1:
+            try:
+                instance = n_list[0]
+                command = n_list[1].split('(')[0]
+                if command not in cmds:
+                    print("*** invalid syntax: {} ***".format(arg))
+                # handles object.all() cmd
+                if command == cmds[0]:
+                    self.do_all(instance)
+                    return
+                # handles object.count() cmd
+                if command == cmds[1]:
+                    print(models.storage.count(instance))
+                    return
+                Id = n_list[1].split('(')[1].split(')')[0]
+                # handles object.destroy() cmd
+                if command == cmds[2]:
+                    Arg = instance + " " + Id
+                    self.do_destroy(Arg)
+                    return
+                # handles object.show() cmd
+                if command == cmds[3]:
+                    Arg = instance + " " + Id
+                    self.do_show(Arg)
+                    return
+                # handles object.update() command
+                if command == cmds[4]:
+                    Arg = (n_list[-1].split(","))
+                    n_id = Arg[0].split("(")[-1]
+                    n_name = Arg[1]
+                    n_value = Arg[2].split(')')[0]
+                    self.do_update("{} {} {} {}".format(instance, n_id, n_name, n_value))
+                    
+                    return
+            except IndexError:
+                return
+
+        else:
+            print("*** invalid syntax: {} ***".format(arg)) 
+
+
     def emptyline(self):
         """ overwriting the emptyline method """
         return False
@@ -46,11 +91,8 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     try:
                         value = int(value)
-                    except:
-                        try:
-                            value = float(value)
-                        except:
-                            continue
+                    except ValueError:
+                        value = float(value)
                 new_dict[key] = value
         return new_dict
 
@@ -140,12 +182,12 @@ class HBNBCommand(cmd.Cmd):
                                 if args[2] in integers:
                                     try:
                                         args[3] = int(args[3])
-                                    except:
+                                    except ValueError:
                                         args[3] = 0
                                 elif args[2] in floats:
                                     try:
                                         args[3] = float(args[3])
-                                    except:
+                                    except ValueError:
                                         args[3] = 0.0
                             setattr(models.storage.all()[k], args[2], args[3])
                             models.storage.all()[k].save()
@@ -159,6 +201,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

@@ -13,7 +13,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 classes = {"BaseModel": BaseModel, "User": User, "Place": Place,
-        "Review":Review, "Amenity": Amenity, "City": City, "State": State}
+           "Review": Review, "Amenity": Amenity, "City": City, "State": State}
 
 """ definition of class 'FileStorage'"""
 
@@ -41,20 +41,19 @@ class FileStorage:
         """ obj is an object of a class to be
             stored int the '__objects' dictionary
         """
-        key = type(self).__name__
+        key = type(obj).__name__
         key += "."
         key += obj.id
         FileStorage.__objects[key] = obj
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
-        json_objects = {}
-        for key in self.__objects:
-            if key == "password":
-                json_objects[key].decode()
-            json_objects[key] = self.__objects[key].to_dict()
+        new_dict = FileStorage.__objects
+        dict1 = {}
+        for key in new_dict.keys():
+            dict1[key] = new_dict[key].to_dict()
         with open(self.__file_path, 'w') as f:
-            json.dump(json_objects, f)
+            json.dump(dict1, f)
 
     def reload(self):
         """ reloads a json file if it exists otherwise do nothing"""
@@ -96,17 +95,13 @@ class FileStorage:
 
         return None
 
-    def count(self, cls=None):
+    def count(self, cls):
         """
         count the number of objects in storage
         """
-        all_class = classes.values()
-
-        if not cls:
-            count = 0
-            for clas in all_class:
-                count += len(models.storage.all(clas).values())
-        else:
-            count = len(models.storage.all(cls).values())
-
+        count = 0
+        for key in models.storage.all().keys():
+            if cls in key:
+                count += 1
         return count
+

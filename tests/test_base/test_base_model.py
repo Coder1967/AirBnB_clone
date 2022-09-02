@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 import unittest
 import os
 """ unittests for base_model"""
 
 
 class Base_test(unittest.TestCase):
-    """ tests for the unique id of object"""
+    """ beginning tests """
     @classmethod
     def setUp(self):
         """ first method ran, sets up test
@@ -15,15 +16,18 @@ class Base_test(unittest.TestCase):
             os.rename("file.json", "tmp.json")
         except IOError:
             pass
+
     def test_id(self):
         """ beginning test for id"""
         base1 = BaseModel()
         self.assertEqual(base1.id, base1.id)
+
     """ tests for the created_at object attr"""
     def test_created_at(self):
         """ beginning test for 'created_at'"""
         base1 = BaseModel()
         self.assertAlmostEqual(base1.created_at, base1.created_at)
+
     """ tests for the updated_at  attr"""
     def test_updated(self):
         """ beginning the tests """
@@ -42,10 +46,16 @@ class Base_test(unittest.TestCase):
     def test_save(self):
         """ beginning test for 'save' """
         base1 = BaseModel()
-        t = base1.updated_at
+        store = FileStorage()
         base1.save()
-        self.assertNotEqual(t, base1.updated_at)
-    
+        store.reload()
+        dict1 = base1.__dict__
+        dict2 = store.all()
+        key = "BaseModel" + "." + base1.id
+        dict2 = dict2[key].to_dict()
+        del dict2["__class__"]
+        self.assertEqual(dict1["id"], dict2['id'])
+
     @classmethod
     def tearDown(self):
         """
