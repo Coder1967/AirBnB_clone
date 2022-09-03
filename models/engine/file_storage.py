@@ -62,6 +62,7 @@ class FileStorage:
                 new_dict = json.load(f)
                 for obj in new_dict.values():
                     cls_name = obj["__class__"]
+                    del obj["__class__"]
                     cls_name += "()"
                     instance = eval(cls_name)
                     self.new(instance)
