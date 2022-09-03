@@ -63,7 +63,6 @@ class FileStorage:
                 for obj in new_dict.values():
                     cls_name = obj["__class__"]
                     cls_name += "()"
-                    del obj["__class__"]
                     instance = eval(cls_name)
                     self.new(instance)
         except FileNotFoundError:
