@@ -52,13 +52,13 @@ class FileStorage:
         dict1 = {}
         for key in new_dict.keys():
             dict1[key] = new_dict[key].to_dict()
-        with open(self.__file_path, 'w') as f:
+        with open(self.__file_path, 'w', encoding="utf-8") as f:
             json.dump(dict1, f)
 
     def reload(self):
         """ reloads a json file if it exists otherwise do nothing"""
         try:
-            with open(FileStorage.__file_path, "r") as f:
+            with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                 new_dict = json.load(f)
                 for obj in new_dict.values():
                     cls_name = obj["__class__"]
