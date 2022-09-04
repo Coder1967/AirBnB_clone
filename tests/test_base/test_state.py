@@ -3,6 +3,7 @@
 from unittest import TestCase
 import os
 from models.state import State
+from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
 
@@ -23,6 +24,16 @@ class TestUser(TestCase):
         state1 = State()
         state1.name = "edo"
         self.assertEqual(state1.name, "edo")
+
+    def test_str(self):
+        """ tests if the proper string representation is returned """
+        st = State()
+        string = "[State] ({}) {}".format(st.id, st.__dict__)
+        self.assertEqual(string, str(st))
+
+    def test_is_instance(self):
+        st = State()
+        self.assertIsInstance(st, BaseModel)
 
     """ test for the 'save' and 'to_dict'
     metods

@@ -3,6 +3,7 @@
 from unittest import TestCase
 import os
 from models.state import State
+from models.base_model import BaseModel
 from models.city import City
 from models.engine.file_storage import FileStorage
 
@@ -18,15 +19,18 @@ class TestCity(TestCase):
         except IOError:
             pass
 
-    def test_attr(self):
-        """ testing the assignments of attrs """
-        city1 = City()
+    def test_state_id(self):
+        """ testing the assignments of the state_id public attr """
         state1 = State()
         state1.name = "Edo"
-        city1.state_id = state1.id
-        city1.name = "Benin"
-        self.assertEqual(city1.state_id, state1.id)
-        self.assertEqual(city1.name, "Benin")
+        City.state_id = state1.id
+
+        self.assertEqual(City.state_id, state1.id)
+
+    def test_name(self):
+        """ testing the assignment of the name public attr """
+        City.name = "Benin"
+        self.assertEqual(City.name, "Benin")
 
     """test for the 'save' and 'to_dict'
     methods
@@ -42,6 +46,17 @@ class TestCity(TestCase):
         key = "City" + "." + city1.id
         dict2 = dict2[key].to_dict()
         self.assertEqual(dict1["id"], dict2['id'])
+
+    def test_is_subclass(self):
+        """ tests if City is a subclass of BaseModel """
+        city = City()
+        self.assertIsInstance(city, BaseModel)
+
+    def test_str(self):
+        """ tests if the proper string representation is returned """
+        city = City()
+        string = "[City] ({}) {}".format(city.id, city.__dict__)
+        self.assertEqual(string, str(city))
 
     @classmethod
     def tearDown(self):

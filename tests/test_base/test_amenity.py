@@ -3,6 +3,7 @@
 from unittest import TestCase
 import os
 from models.amenity import Amenity
+from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
 
@@ -17,13 +18,12 @@ class TestAmenity(TestCase):
         except IOError:
             pass
 
-    def test_attr(self):
+    def test_name(self):
         """
-        testing assignment of attributes
+        testing assignment of name attributes
         """
-        amty = Amenity()
-        amty.name = "pool"
-        self.assertEqual(amty.name, "pool")
+        Amenity.name = "pool"
+        self.assertEqual(Amenity.name, "pool")
 
     """ test for the 'save' and 'to_dict' met
     ods
@@ -39,6 +39,17 @@ class TestAmenity(TestCase):
         key = "Amenity" + "." + amnty.id
         dict2 = dict2[key].to_dict()
         self.assertEqual(dict1["id"], dict2['id'])
+
+    def test_str(self):
+        """ makes sure the proper str representation is returned """
+        amnty = Amenity()
+        string = "[Amenity] ({}) {}".format(amnty.id, amnty.__dict__)
+
+    def test_isSubclass(self):
+        """ checks if Amenity is a subclass of BaseModel
+        """
+        amnty = Amenity()
+        self.assertIsInstance(amnty, BaseModel)
 
     @classmethod
     def tearDown(self):

@@ -2,6 +2,7 @@
 """ unnitests for the user module """
 from unittest import TestCase
 import os
+from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
 from models.review import Review
@@ -22,14 +23,13 @@ class TestReview(TestCase):
     def test_attrs(self):
         """ testing attribute assignment """
         place = Place()
-        review = Review
         usr = User()
-        review.place_id = place.id
-        review.user_id = usr.id
-        review.text = "it was a splendid stay. 5 *"
-        self.assertEqual(review.place_id, place.id)
-        self.assertEqual(review.user_id, usr.id)
-        self.assertEqual(review.text, "it was a splendid stay. 5 *")
+        Review.place_id = place.id
+        Review.user_id = usr.id
+        Review.text = "it was a splendid stay. 5 *"
+        self.assertEqual(Review.place_id, place.id)
+        self.assertEqual(Review.user_id, usr.id)
+        self.assertEqual(Review.text, "it was a splendid stay. 5 *")
 
     """ test for the 'save' and 'to_dict' metods
     """
@@ -44,6 +44,16 @@ class TestReview(TestCase):
         key = "Place" + "." + place.id
         dict2 = dict2[key].to_dict()
         self.assertEqual(dict1["id"], dict2['id'])
+
+    def test_str(self):
+        """ tests for if the proper str representation is returned """
+        rev = Review()
+        string = "[Review] ({}) {}".format(rev.id, rev.__dict__)
+
+    def test_isSubclass(self):
+        """ tests if review is a subclass of BaseModel"""
+        rev = Review()
+        self.IsInstance(rev, BaseModel)
 
     @classmethod
     def tearDown(self):
