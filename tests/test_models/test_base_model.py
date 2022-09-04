@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import models
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 import unittest
@@ -88,3 +89,6 @@ class Base_test(unittest.TestCase):
             os.rename("tmp.json", "file.json")
         except IOError:
             pass
+
+if __name__ == "__main__":
+    unittest.main()

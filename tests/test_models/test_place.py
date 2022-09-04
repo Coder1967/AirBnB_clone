@@ -87,3 +87,6 @@ class TestPlace(TestCase):
             os.rename("tmp.json", "file.json")
         except IOError:
             pass
+
+if __name__ == "__main__":
+    unittest.main()
