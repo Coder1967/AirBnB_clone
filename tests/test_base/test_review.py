@@ -53,7 +53,7 @@ class TestReview(TestCase):
     def test_isSubclass(self):
         """ tests if review is a subclass of BaseModel"""
         rev = Review()
-        self.IsInstance(rev, BaseModel)
+        self.assertIsInstance(rev, BaseModel)
 
     @classmethod
     def tearDown(self):
