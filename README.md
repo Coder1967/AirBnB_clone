@@ -1,5 +1,5 @@
 #AirBnb-clone console
-#====================
+====================
 
 Create: create command creates an instance of Amenity, BaseModel, City, Place, Review, State, User 'create <class-name> <id>'
 
